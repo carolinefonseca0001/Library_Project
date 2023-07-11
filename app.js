@@ -30,17 +30,19 @@ class Library {
 }
 
 let lib = new Library();
-//README.md lines 36 - on, I have no clue what I'm doing.
-
 var x = document.createElement("TABLE");
 let TABLE = [{ name: "Title" }, { name: "Author" }, { name: "Read" }];
 
-document.getElementById("submit").addEventListener("click", displayDate);
+document.getElementById("submit").addEventListener("click", addbookhelper);
 document.getElementById("myform").addEventListener("submit", addbookhelper);
+function checkboxFunction() {
+  var x = document.createElement("INPUT");
+  x.setAttribute("type", "checkbox");
+  document.body.appendChild(x);
+}
 
-function displayDate() {
-  // document.getElementById("demo").innerHTML = Date();
-  console.log("displaydate");
+function clickdisable(event) {
+  event.target.disabled = true;
 }
 
 function addbookhelper(event) {
@@ -48,10 +50,22 @@ function addbookhelper(event) {
   let userTitle = document.getElementById("title").value;
   let userAuthor = document.getElementById("author").value;
   let userRead = document.getElementById("read").checked;
-  console.log(userTitle);
-  console.log(userAuthor);
-  console.log(userRead);
   let mynewbook = new Book(userTitle, userAuthor, userRead);
   lib.addBook(mynewbook);
-  console.log("HIYA!!!!");
+  var table = document.getElementById("table");
+  var row = table.insertRow(-1);
+  var cell1 = row.insertCell(-1);
+  var cell2 = row.insertCell(-1);
+  var cell3 = row.insertCell(-1);
+  cell1.innerHTML = userTitle;
+  cell2.innerHTML = userAuthor;
+
+  var x = document.createElement("INPUT");
+  x.setAttribute("type", "checkbox");
+  x.checked = userRead;
+  x.disabled = userRead;
+  // addEventListener("click");
+  x.addEventListener("click", clickdisable);
+
+  cell3.appendChild(x);
 }
